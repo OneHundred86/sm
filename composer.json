@@ -1,0 +1,25 @@
+{
+    "name": "southcn/sm",
+    "autoload": {
+        "psr-4": {
+            "Southcn\\Sm\\": "src/"
+        },
+        "files": ["functions.php"]
+    },
+    "authors": [
+        {
+            "name": "chenguangjun",
+            "email": "chen.gj@qq.com"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Southcn\\Sm\\SmServiceProvider"
+            ]
+        }
+    }
+}

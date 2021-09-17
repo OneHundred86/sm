@@ -1,19 +1,12 @@
 <?php
 
-namespace Southcn\Sm;
+namespace Oh86\Sm;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Application as LaravelApplication;
 
 class SmServiceProvider extends ServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    // protected $defer = true;
-
     /**
      * Boot the service provider.
      *

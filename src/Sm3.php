@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Southcn\Sm;
+namespace Oh86\Sm;
 
 
 

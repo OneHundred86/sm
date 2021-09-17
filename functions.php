@@ -1,6 +1,6 @@
 <?php
-use Southcn\Sm\Sm3;
-use Southcn\Sm\Sm4;
+use Oh86\Sm\Sm3;
+use Oh86\Sm\Sm4;
 
 if (!function_exists("sm3")) {
     function sm3(string $str)

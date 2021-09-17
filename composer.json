@@ -1,8 +1,8 @@
 {
-    "name": "southcn/sm",
+    "name": "oh86/sm",
     "autoload": {
         "psr-4": {
-            "Southcn\\Sm\\": "src/"
+            "Oh86\\Sm\\": "src/"
         },
         "files": ["functions.php"]
     },
@@ -14,11 +14,11 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-main": "1.0-dev"
         },
         "laravel": {
             "providers": [
-                "Southcn\\Sm\\SmServiceProvider"
+                "Oh86\\Sm\\SmServiceProvider"
             ]
         }
     }

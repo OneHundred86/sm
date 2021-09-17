@@ -1,5 +1,5 @@
 <?php
-namespace Southcn\Sm;
+namespace Oh86\Sm;
 use Exception;
 /**
  * 国密算法SM4

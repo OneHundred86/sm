@@ -1,7 +1,7 @@
 ##### 一、安装
 
 ```shell
-composer require "southcn/sm"
+composer require "oh86/sm"
 ```
 
 ##### 二、配置
@@ -9,13 +9,13 @@ composer require "southcn/sm"
 1. 添加下面一行到 `config/app.php` 中 `providers` 部分：
 
    ```
-   Southcn\Sm\SmServiceProvider::class,
+   Oh86\Sm\SmServiceProvider::class,
    ```
 
 2. 发布配置文件与资源
 
    ```
-   php artisan vendor:publish --provider=Southcn\Sm\SmServiceProvider
+   php artisan vendor:publish --provider='Oh86\Sm\SmServiceProvider'
    ```
 
 3. 配置.env

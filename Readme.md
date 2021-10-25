@@ -31,7 +31,7 @@ composer require "oh86/sm"
 => "6e0f9e14344c5406a0cf5a3b4dfb665f87f4a771a31f7edbb5c72874a32b2957"
 >>> 
 >>> $encrypt = sm4_encrypt("hello world")
-=> "8a69dcc5e2476196b17d3b4f28972655"
+=> "f7064332db25a4ab8615721c49f49ee6"
 >>> sm4_decrypt($encrypt)
 => "hello world"
 >>> 

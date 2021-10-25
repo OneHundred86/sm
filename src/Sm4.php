@@ -263,10 +263,10 @@ class Sm4
 
         // echo $decrypt_text_data . '  ' . $pad_length . PHP_EOL;
 
-        return strtolower(hex2bin(preg_replace(
+        return hex2bin(preg_replace(
             sprintf("/%s$/", str_repeat(sprintf("%02X", $pad_length), $pad_length)),
             '',
             $decrypt_text_data
-        )));
+        ));
     }
 }

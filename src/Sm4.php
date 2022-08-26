@@ -1,12 +1,17 @@
 <?php
+
 namespace Oh86\Sm;
-use Exception;
+
+use Oh86\Sm\Exceptions\SM4DecryptException;
+use Oh86\Sm\Exceptions\SM4EncryptException;
+use Oh86\Sm\Exceptions\SM4Exception;
+use Oh86\Sm\Exceptions\SM4KeyException;
+
 /**
  * 国密算法SM4
  * SM4加密方式类似于AES加密，为对称加密，可以通过相应的秘钥进行加密和解密
  * 加密前需要客户端先自己生成一个长度为32位的子串作为key，其中子串不能包含中文。并且SM4加密方式有CBC和ECB两种，以下加密方式为ECB模式。
  */
-
 class Sm4
 {
     const SM4_CK = [
@@ -51,13 +56,18 @@ class Sm4
     private $block_size = 32;
 
     /**
-     * SM4 constructor.
-     * @param $key 32个十六进制的字符
-     * @throws Exception
+     * Sm4 constructor.
+     * @param string $key :: 32个十六进制的字符
+     * @throws SM4KeyException
      */
-    public function __construct($key)
+    public function __construct(string $key)
     {
-        $this->key = $this->preProcess($key);
+        try {
+            $this->key = $this->preProcess($key);
+        } catch (SM4Exception $e) {
+            throw new SM4KeyException("sm4 key error");
+        }
+
         $this->setSkey();
     }
 
@@ -101,9 +111,8 @@ class Sm4
     /**
      * 对字符串加密
      * @param $plainText
-     *
      * @return string
-     * @throws Exception
+     * @throws SM4EncryptException
      */
     public function encrypt($plainText)
     {
@@ -119,17 +128,19 @@ class Sm4
         $chunks = str_split($pad_bytes, $this->block_size);
 
         return strtolower(implode('', array_map(function ($chunk) {
-            return $this->encryptBinary($chunk);
+            try {
+                return $this->encryptBinary($chunk);
+            }catch (SM4Exception $e){
+                throw new SM4EncryptException("encrypt error");
+            }
         }, $chunks)));
     }
 
-
     /**
      * SM4加密单个片段(128bit)
-     * @param $text string 32个十六进制字符串
-     *
+     * @param $text :: 32字节16进制字符串
      * @return string
-     * @throws Exception
+     * @throws SM4Exception
      */
     private function encryptBinary($text)
     {
@@ -165,20 +176,19 @@ class Sm4
         return $this->wrapResult($re);
     }
 
-
     /**
      * 预处理16字节长度的16进制字符串 返回10进制的数组 数组大小为16
-     * @param $text
-     *
+     * @param $text :: 32字节16进制字符串
      * @return array
-     * @throws Exception
+     * @throws SM4Exception
      */
     private function preProcess($text)
     {
         preg_match('/[0-9a-f]{32}/', strtolower($text), $re);
         if (empty($re)) {
-            throw new Exception('sm4 error input format!');
+            throw new SM4Exception('input error');
         }
+
         $key = $re[0];
         for ($i = 0; $i < 16; $i++) {
             $result[] = hexdec($key[2 * $i] . $key[2 * $i + 1]);
@@ -190,7 +200,6 @@ class Sm4
     /**
      * 将十进制结果包装成16进制字符串输出
      * @param $result
-     *
      * @return string
      */
     private function wrapResult($result)
@@ -211,9 +220,9 @@ class Sm4
 
     /**
      * SM4解密单个片段(128bits)
-     * @param $text string 32个16进制字符串
+     * @param $text
      * @return string
-     * @throws Exception
+     * @throws SM4Exception
      */
     private function decrypt_decrypt($text)
     {
@@ -248,20 +257,27 @@ class Sm4
     }
 
     /**
-     * 方法描述
-     * @param $cipherText
-     * @return string
+     * 解密
+     * @param string|null $cipherText
+     * @return string|null
+     * @throws SM4Exception
      */
-    public function decrypt($cipherText)
+    public function decrypt(?string $cipherText) : ?string
     {
+        if(!$cipherText){
+            return $cipherText;
+        }
+
         $chunks = str_split($cipherText, $this->block_size);
         $decrypt_text_data = implode('', array_map(function ($chunk) {
-            return $this->decrypt_decrypt($chunk);
+            try {
+                return $this->decrypt_decrypt($chunk);
+            }catch (SM4Exception $e){
+                throw new SM4DecryptException("decrypt error");
+            }
         }, $chunks));
 
         $pad_length = hexdec(substr($decrypt_text_data, -2));
-
-        // echo $decrypt_text_data . '  ' . $pad_length . PHP_EOL;
 
         return hex2bin(preg_replace(
             sprintf("/%s$/", str_repeat(sprintf("%02X", $pad_length), $pad_length)),

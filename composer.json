@@ -13,9 +13,6 @@
         }
     ],
     "extra": {
-        "branch-alias": {
-            "dev-main": "1.0-dev"
-        },
         "laravel": {
             "providers": [
                 "Oh86\\Sm\\SmServiceProvider"

@@ -27,10 +27,6 @@ class SmServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Sm3::class, function () {
-            return new Sm3();
-        });
-
         $this->app->singleton(Sm4::class, function () {
             return new Sm4(config('sm.sm4_key'));
         });

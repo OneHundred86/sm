@@ -18,5 +18,8 @@
                 "Oh86\\Sm\\SmServiceProvider"
             ]
         }
+    },
+    "require": {
+        "lpilp/guomi": "^1.0"
     }
 }

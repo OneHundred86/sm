@@ -2,10 +2,8 @@
 
 namespace Oh86\Sm;
 
-use FG\ASN1\Universal\Integer;
 use Mdanter\Ecc\Crypto\Key\PrivateKey;
 use Mdanter\Ecc\Crypto\Signature\Signature;
-use Mdanter\Ecc\Serializer\Signature\DerSignatureSerializer;
 use Rtgm\ecc\Sm2Signer;
 use Rtgm\sm\RtSm2;
 

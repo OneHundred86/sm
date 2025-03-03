@@ -6,12 +6,14 @@ use Oh86\Sm\Sm2;
 if (!function_exists("sm3")) {
     function sm3(string $str, bool $binary = false): string
     {
-        $hex = (new Sm3())->encrypt($str);
-        if ($binary){
-            return hex2bin($hex);
-        }else{
-            return $hex;
-        }
+        // $hex = (new Sm3())->encrypt($str);
+        // if ($binary) {
+        //     return hex2bin($hex);
+        // } else {
+        //     return $hex;
+        // }
+
+        return openssl_digest($str, 'sm3', $binary);
     }
 }
 
@@ -65,7 +67,7 @@ if (!function_exists("sm2_verify_without_asn1")) {
         $publicKey = config("sm.sm2.public_key");
         try {
             return $sm2->verifySignWithoutAsn1($text, $sign, $publicKey, $userId);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -87,7 +89,7 @@ if (!function_exists("sm2_verify")) {
         $publicKey = config("sm.sm2.public_key");
         try {
             return $sm2->verifySign($text, $sign, $publicKey, $userId);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }

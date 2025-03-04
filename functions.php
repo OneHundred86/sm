@@ -6,13 +6,18 @@ use Oh86\Sm\Sm2;
 if (!function_exists("sm3")) {
     function sm3(string $str, bool $binary = false): string
     {
-        // $hex = (new Sm3())->encrypt($str);
-        // if ($binary) {
-        //     return hex2bin($hex);
-        // } else {
-        //     return $hex;
-        // }
+        $hex = (new Sm3())->encrypt($str);
+        if ($binary) {
+            return hex2bin($hex);
+        } else {
+            return $hex;
+        }
+    }
+}
 
+if (!function_exists("openssl_sm3")) {
+    function openssl_sm3(string $str, bool $binary = false): string
+    {
         return openssl_digest($str, 'sm3', $binary);
     }
 }
